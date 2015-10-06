@@ -2,8 +2,25 @@
   "use strict";
   var Tile = React.createClass({
     render: function() {
-      if
-      return(<div>" T "</div>);
+      var tile = this.props.tile;
+      var klass = "tile";
+      var text = "";
+      if (tile.explored) {
+        klass += " explored";
+        if (tile.bombed) {
+          klass += " bombed";
+          text += "&#9762;";
+        } else {
+          var count = tile.adjacentBombCount();
+          text +=  count > 0 ? count : " ";
+        }
+      } else if (tile.flagged) {
+        klass += "flagged";
+        text += "&#9873;";
+      } else {
+        text += " "
+      }
+      return(<div className={klass}>{text}</div>);
     }
   });
 
@@ -15,7 +32,7 @@
         {
           that.props.board.grid.map(function(row, i) {
             return (
-              <div key={i}>
+              <div className="row" key={i}>
               {
                 row.map(function(tile, j) {
                   return (
@@ -23,7 +40,7 @@
                       tile={tile}
                       position={tile.pos}
                       updateGame={that.updateGame}
-                      key={[i,j]}/>
+                      key={[i,j]} />
                   );
                 })
               }
