@@ -82,14 +82,14 @@
     },
 
     render: function() {
+      var modal = "";
       if (this.state.over) {
         var message = this.state.won? "You won!" : "You lost!";
-      } else {
-        var message = "Keep playing!";
+        modal = <div className="modal">{message}</div>;
       }
       return(
         <div>
-          <h2>{message}</h2>
+          {modal}
           <Board board={this.state.board} updateGame={this.updateGame} />
         </div>
       );
