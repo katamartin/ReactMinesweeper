@@ -2,6 +2,7 @@
   "use strict";
   var Tile = React.createClass({
     render: function() {
+      if
       return(<div>" T "</div>);
     }
   });
@@ -18,7 +19,11 @@
               {
                 row.map(function(tile, j) {
                   return (
-                    <Tile position={tile.pos} updateGame={that.updateGame} key={[i,j]}/>
+                    <Tile
+                      tile={tile}
+                      position={tile.pos}
+                      updateGame={that.updateGame}
+                      key={[i,j]}/>
                   );
                 })
               }
