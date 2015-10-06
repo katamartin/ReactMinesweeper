@@ -81,12 +81,20 @@
       }
     },
 
+    newGame: function(event) {
+      event.preventDefault();
+      var board = new Minesweeper.Board(10, 10);
+      this.setState({board: board, won: false, over: false});
+    },
+
     render: function() {
       var modal = "";
       if (this.state.over) {
         var message = this.state.won? "You won!" : "You lost!";
         modal = <div className="modal-back">
-                  <div className="modal">{message}</div>
+                  <div className="modal">{message}
+                    <button onClick={this.newGame}>Play Again?</button>
+                  </div>
                 </div>;
       }
       return(
