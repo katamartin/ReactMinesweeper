@@ -85,7 +85,9 @@
       var modal = "";
       if (this.state.over) {
         var message = this.state.won? "You won!" : "You lost!";
-        modal = <div className="modal">{message}</div>;
+        modal = <div className="modal-back">
+                  <div className="modal">{message}</div>
+                </div>;
       }
       return(
         <div>
