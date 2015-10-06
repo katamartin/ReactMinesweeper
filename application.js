@@ -9,14 +9,14 @@
         klass += " explored";
         if (tile.bombed) {
           klass += " bombed";
-          text += "&#9762;";
+          text += "\u2622";
         } else {
           var count = tile.adjacentBombCount();
           text +=  count > 0 ? count : " ";
         }
       } else if (tile.flagged) {
-        klass += "flagged";
-        text += "&#9873;";
+        klass += " flagged";
+        text += "\u2691";
       } else {
         text += " "
       }
@@ -64,13 +64,34 @@
       return {board: board, won: false, over: false};
     },
 
-    updateGame: function() {
-      // console.log("hey");
+    updateGame: function(pos, flagging) {
+      var tile = this.state.board.grid[pos[0]][pos[1]];
+      if (flagging) {
+        tile.toggleFlag();
+      } else {
+        tile.explore();
+      }
+
+      if (this.state.board.won()) {
+        this.setState({won: true, over: true});
+      } else if (this.state.board.lost()) {
+        this.setState({won: false, over: true});
+      } else {
+        this.setState({won: false, over: false});
+      }
     },
 
     render: function() {
+      if (this.state.over) {
+        var message = this.state.won? "You won!" : "You lost!";
+      } else {
+        var message = "Keep playing!";
+      }
       return(
-        <Board board={this.state.board} updateGame={this.updateGame}/>
+        <div>
+          <h2>{message}</h2>
+          <Board board={this.state.board} updateGame={this.updateGame} />
+        </div>
       );
     }
   });
