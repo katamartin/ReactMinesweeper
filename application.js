@@ -61,6 +61,7 @@
   var Game = React.createClass({
     getInitialState: function() {
       var board = new Minesweeper.Board(10, 10);
+      board.explored = false;
       return {board: board, won: false, over: false};
     },
 
@@ -68,6 +69,8 @@
       var tile = this.state.board.grid[pos[0]][pos[1]];
       if (flagging) {
         tile.toggleFlag();
+      } else if (!this.state.board.explored) {
+        this.ensureSafeExploration(pos);
       } else {
         tile.explore();
       }
@@ -79,6 +82,18 @@
       } else {
         this.setState({won: false, over: false});
       }
+    },
+
+    ensureSafeExploration: function(pos) {
+      var board = this.state.board;
+      var tile = board.grid[pos[0]][pos[1]];
+      while (tile.bombed) {
+        board = new Minesweeper.Board(10, 10);
+        tile = board.grid[pos[0]][pos[1]];
+      }
+      tile.explore();
+      board.explored = true;
+      this.setState({board: board});
     },
 
     newGame: function(event) {
