@@ -20,7 +20,12 @@
       } else {
         text += " "
       }
-      return(<div className={klass}>{text}</div>);
+      return(<div onClick={this.handleClick} className={klass}>{text}</div>);
+    },
+
+    handleClick: function(event) {
+      event.preventDefault();
+      this.props.updateGame(this.props.position, event.altKey);
     }
   });
 
@@ -39,7 +44,7 @@
                     <Tile
                       tile={tile}
                       position={tile.pos}
-                      updateGame={that.updateGame}
+                      updateGame={that.props.updateGame}
                       key={[i,j]} />
                   );
                 })
@@ -60,7 +65,7 @@
     },
 
     updateGame: function() {
-
+      // console.log("hey");
     },
 
     render: function() {
