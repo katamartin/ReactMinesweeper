@@ -83,8 +83,7 @@
 
     newGame: function(event) {
       event.preventDefault();
-      var board = new Minesweeper.Board(10, 10);
-      this.setState({board: board, won: false, over: false});
+      this.setState(this.getInitialState());
     },
 
     render: function() {
